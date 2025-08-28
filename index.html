@@ -3,119 +3,103 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>FLOYDVANAVIE — Vintage Showroom Appointments</title>
-  <meta name="description" content="FLOYDVANAVIE — Private vintage clothing showroom appointments." />
+  <title>FLOYDVANAVIE — Showroom</title>
+  <meta name="description" content="Book a private showroom appointment, learn about the curator, and browse the archive of FLOYDVANAVIE." />
+  <meta name="theme-color" content="#111111" />
   <style>
-    :root {
-      --bg:#ffffff; --text:#111; --muted:#6b7280; --line:#e5e7eb; --accent:#111111;
-    }
+    :root{ --bg:#ffffff; --text:#0b0b0b; --muted:#6b7280; --line:#e5e7eb; --accent:#111; }
     *{box-sizing:border-box}
-    html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font:16px/1.65 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial}
+    html,body{margin:0;height:100%;background:var(--bg);color:var(--text);font:16px/1.65 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial}
     a{color:var(--accent);text-decoration:none}
     a:hover{text-decoration:underline}
-    .wrap{max-width:1200px;margin:0 auto;padding:40px 32px}
-
+    .wrap{max-width:1100px;margin:0 auto;padding:32px}
     header{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--line);z-index:40}
-    .nav{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 32px}
-    .brand{letter-spacing:.08em;font-weight:800;font-size:20px}
-    .brand span{display:block;font-size:11px;font-weight:600;letter-spacing:.16em;color:var(--muted)}
-    .links{display:flex;gap:24px;align-items:center}
-    .btn{display:inline-block;padding:10px 20px;border-radius:8px;font-weight:600;background:#111;color:#fff}
-    .btn:hover{opacity:.9}
+    .nav{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:64px}
+    .brand{letter-spacing:.08em;font-weight:800;font-size:18px}
+    .brand span{display:block;font-size:11px;font-weight:600;letter-spacing:.16em;margin-top:2px;color:var(--muted)}
+    .links{display:flex;gap:18px;flex-wrap:wrap;align-items:center}
+    .link{padding:10px 0;font-weight:700}
+    .btn{display:inline-block;border:1px solid #111;padding:12px 18px;border-radius:12px;font-weight:700;background:#111;color:#fff}
+    main{min-height:calc(100vh - 160px)}
 
-    .hero{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;padding:80px 0;min-height:calc(100vh - 140px)}
-    .hero h1{font-size:48px;line-height:1.1;margin:0;font-weight:900;letter-spacing:-.01em}
-    .hero p{margin:12px 0 0;color:var(--muted);max-width:60ch}
+    /* Page shells */
+    .page{display:none}
+    .page.active{display:block}
+    .hero{display:grid;grid-template-columns:1.05fr .95fr;gap:42px;align-items:end;padding:64px 0 40px;min-height:38vh}
+    .hero h1{font-size:44px;line-height:1.08;margin:0 0 10px;font-weight:900;letter-spacing:-.01em}
+    .muted{color:var(--muted)}
 
-    .card{background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
-    .card .in{padding:24px}
+    .card{background:#fff;border:1px solid var(--line);border-radius:14px}
+    .card .in{padding:22px}
     .stack{display:grid;gap:16px}
 
-    .section{padding:80px 0;border-top:1px solid var(--line)}
-    h2{font-size:28px;margin:0 0 16px;font-weight:900}
-    h3{font-size:20px;margin:0 0 8px;font-weight:700}
-    .muted{color:var(--muted);font-size:15px}
-
-    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:32px}
+    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:28px}
     .col-7{grid-column:span 7}
     .col-5{grid-column:span 5}
 
-    form label{display:block;font-weight:600;margin:10px 0 6px}
-    input, textarea, select{width:100%;padding:12px 14px;border:1px solid #d1d5db;border-radius:8px;background:#fff;font:inherit}
+    form label{display:block;font-weight:700;margin:10px 0 6px}
+    input, textarea, select{width:100%;padding:12px 13px;border:1px solid #d1d5db;border-radius:12px;background:#fff;font:inherit}
     textarea{min-height:120px;resize:vertical}
-    input:focus, textarea:focus, select:focus{outline:2px solid #111; outline-offset:2px}
-    .row{display:grid;grid-template-columns:1fr 1fr;gap:20px}
-    .small{font-size:14px;color:var(--muted)}
+    input:focus, textarea:focus, select:focus{outline:2px solid #111; outline-offset:1px}
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .small{font-size:13px;color:var(--muted)}
+    .agree{display:flex;gap:10px;align-items:center;padding:4px 0}
+    .agree input{width:18px;height:18px}
 
-    .checkbox-line{display:flex;align-items:center;gap:12px;margin-top:8px}
-    .checkbox-line input{margin-top:0;width:18px;height:18px}
+    /* About layout */
+    .lead{font-size:20px;color:#1f2937;max-width:70ch}
 
-    footer{padding:32px 0;text-align:center}
-    .fine{font-size:14px;color:var(--muted)}
+    /* Archive */
+    .timeline{display:grid;gap:22px}
+    .entry{display:grid;grid-template-columns:120px 1fr;gap:18px;align-items:start}
+    .entry .date{font-weight:800;color:#111}
+    .entry .body{border:1px solid var(--line);border-radius:12px;padding:16px}
+
+    footer{border-top:1px solid var(--line)}
+    .fine{font-size:13px;color:var(--muted)}
 
     @media (max-width:900px){
-      .hero{grid-template-columns:1fr;padding:60px 0}
+      .hero{grid-template-columns:1fr;align-items:start;padding:40px 0 20px}
       .grid{grid-template-columns:1fr}
       .col-7,.col-5{grid-column:span 1}
       .row{grid-template-columns:1fr}
+      .entry{grid-template-columns:1fr}
     }
   </style>
 </head>
 <body>
   <header>
-    <div class="nav">
+    <div class="wrap nav">
       <div class="brand">FLOYDVANAVIE<span>VINTAGE SHOWROOM</span></div>
       <nav class="links">
-        <a href="#about">About</a>
-        <a href="#appointments">Appointments</a>
-        <a href="#contact">Contact</a>
-        <a class="btn" href="#appointments">Book a Visit</a>
+        <a class="link" href="#/appointments">Appointments</a>
+        <a class="link" href="#/about">About</a>
+        <a class="link" href="#/archive">Archive</a>
+        <a class="btn" href="#/appointments">Book</a>
       </nav>
     </div>
   </header>
 
   <main class="wrap">
-    <section class="hero">
-      <div>
-        <h1>Private vintage showroom — by appointment.</h1>
-        <p>FLOYDVANAVIE curates American workwear, denim, and sportswear from the 1930s–1990s. Appointments are one‑on‑one so I can pull pieces in your size and style. Based in East Texas.</p>
-      </div>
-      <aside class="card">
-        <div class="in stack">
-          <h3>Quick details</h3>
-          <ul class="small" style="margin:0 0 6px 18px">
-            <li>Location shared after booking</li>
-            <li>Typical visit 30–60 minutes</li>
-            <li>Buy • Sell • Trade considered</li>
-          </ul>
-          <div class="small">Questions? <a href="mailto:floydvanavie@gmail.com">floydvanavie@gmail.com</a></div>
-          <a class="btn" href="#appointments">Request an appointment</a>
+    <!-- Appointments Page -->
+    <section id="page-appointments" class="page active">
+      <div class="hero">
+        <div>
+          <h1>Book a private showroom visit</h1>
+          <p class="muted">One‑on‑one appointments in East Texas. I’ll pull pieces in your size and interests — workwear, denim, sportswear, and silver/turquoise from the 1930s–1990s.</p>
         </div>
-      </aside>
-    </section>
-
-    <section id="about" class="section">
-      <div class="grid">
-        <div class="col-7">
-          <h2>About</h2>
-          <p>I run FLOYDVANAVIE as a focused, appointment‑only showroom. The goal is simple: honest garments with history — repaired where needed, ready to wear. I buy, sell, trade, and help with sizing or repairs. If you’re hunting for something specific, include it in your request and I’ll pull options ahead of time.</p>
-        </div>
-        <div class="col-5">
-          <div class="card"><div class="in">
-            <h3>What to expect</h3>
-            <ul class="small" style="margin:0 0 0 18px">
-              <li>Curated racks by era and size</li>
-              <li>Private try‑on area</li>
-              <li>Payment: Cash, Zelle, Cash App</li>
+        <aside class="card">
+          <div class="in stack">
+            <h3>Quick details</h3>
+            <ul class="small" style="margin:0 0 6px 18px">
+              <li>Location shared after confirmation</li>
+              <li>Typical visit 30–60 minutes</li>
+              <li>Buy • Sell • Trade considered</li>
             </ul>
-          </div></div>
-        </div>
+          </div>
+        </aside>
       </div>
-    </section>
 
-    <section id="appointments" class="section">
-      <h2>Request an appointment</h2>
-      <p class="muted">Submit the form and I’ll reply by email to confirm a time and share the address.</p>
       <div class="grid">
         <div class="col-7">
           <form id="apptForm" action="https://formsubmit.co/floydvanavie@gmail.com" method="POST" class="card">
@@ -163,13 +147,13 @@
                 </div>
               </div>
 
+              <label class="agree small">
+                <input type="checkbox" required />
+                <span>I understand this is a request and not a confirmed booking.</span>
+              </label>
+
               <label for="notes">Notes</label>
               <textarea id="notes" name="Notes" placeholder="Sizing, specific items, trade offers, etc."></textarea>
-
-              <div class="checkbox-line">
-                <input type="checkbox" id="agree" required />
-                <label for="agree" class="small">I understand this is a request and not a confirmed booking.</label>
-              </div>
 
               <button class="btn" type="submit">Send request</button>
               <div class="small">I’ll reply from <strong>floydvanavie@gmail.com</strong>.</div>
@@ -191,27 +175,133 @@
       </div>
     </section>
 
-    <section id="contact" class="section">
-      <h2>Contact</h2>
+    <!-- About Page -->
+    <section id="page-about" class="page">
+      <div class="hero">
+        <div>
+          <h1>About FLOYDVANAVIE</h1>
+          <p class="lead">A focused, appointment‑only showroom dedicated to honest garments with history — repaired where needed, ready to wear. The name nods to Pink Floyd + Nirvana + “vie” for life.</p>
+        </div>
+      </div>
+
       <div class="grid">
         <div class="col-7">
+          <div class="stack">
+            <div class="card"><div class="in stack">
+              <h3>What I look for</h3>
+              <p>American workwear, denim, sportswear, and silver/turquoise spanning the 1930s–1990s. I prioritize construction, wear, and repair potential over hype.</p>
+            </div></div>
+            <div class="card"><div class="in stack">
+              <h3>Services</h3>
+              <ul class="small" style="margin:0 0 0 18px">
+                <li>Buy • Sell • Trade</li>
+                <li>Sizing & basic repairs</li>
+                <li>Pulls by era and size</li>
+              </ul>
+            </div></div>
+          </div>
+        </div>
+        <aside class="col-5">
           <div class="card"><div class="in stack">
+            <h3>Contact</h3>
             <div><strong>Email:</strong> <a href="mailto:floydvanavie@gmail.com">floydvanavie@gmail.com</a></div>
             <div><strong>Instagram:</strong> <a href="https://instagram.com/floydvanavie" target="_blank" rel="noopener">@floydvanavie</a></div>
-            <div class="muted">Address shared after booking is confirmed.</div>
           </div></div>
-        </div>
+        </aside>
       </div>
     </section>
 
-    <footer>
-      <div class="fine">© <span id="year"></span> FLOYDVANAVIE • All rights reserved.</div>
-    </footer>
+    <!-- Archive Page -->
+    <section id="page-archive" class="page">
+      <div class="hero">
+        <div>
+          <h1>Archive & milestones</h1>
+          <p class="muted">A living log of what we’ve found, learned, and why we keep doing this.</p>
+        </div>
+      </div>
+
+      <div class="timeline">
+        <div class="entry">
+          <div class="date">2025</div>
+          <div class="body">
+            <strong>Showroom build‑out</strong>
+            <p class="small">Moved into the dedicated space; started appointment‑only pulls with curated racks by era and size.</p>
+          </div>
+        </div>
+        <div class="entry">
+          <div class="date">2024</div>
+          <div class="body">
+            <strong>Workwear focus deepens</strong>
+            <p class="small">Cataloged early Montgomery Ward shirts, Duxback hunting pieces, and 1970s sportswear tags. Began repairs in‑house.</p>
+          </div>
+        </div>
+        <div class="entry">
+          <div class="date">Origins</div>
+          <div class="body">
+            <strong>Why we’re still at it</strong>
+            <p class="small">FLOYDVANAVIE is a tribute to the people who wore these clothes first — farmers, railroaders, hunters, skaters — garments with miles and stories.</p>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
 
+  <footer>
+    <div class="wrap" style="display:flex;justify-content:space-between;align-items:center;gap:16px;padding:22px 32px">
+      <div class="fine">© <span id="year"></span> FLOYDVANAVIE</div>
+      <div class="fine">East Texas • By appointment</div>
+    </div>
+  </footer>
+
+  <!-- Thank‑you modal for form redirect -->
+  <div id="thanks" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,.55); align-items:center; justify-content:center; padding:20px">
+    <div class="card" style="max-width:560px;width:100%;background:#fff">
+      <div class="in stack">
+        <h3>Request received — check your email</h3>
+        <p>I’ll reply from <strong>floydvanavie@gmail.com</strong> to confirm your appointment window and share the address.</p>
+        <a class="btn" href="#/appointments" onclick="closeThanks(event)">Close</a>
+      </div>
+    </div>
+  </div>
+
   <script>
+    // Year stamp
     document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Hash router: #/appointments (default), #/about, #/archive
+    const routes = {
+      '/appointments':'page-appointments',
+      '/about':'page-about',
+      '/archive':'page-archive'
+    };
+
+    function render(){
+      const hash = location.hash.replace('#','') || '/appointments';
+      Object.values(routes).forEach(id => document.getElementById(id).classList.remove('active'));
+      const pageId = routes[hash] || routes['/appointments'];
+      document.getElementById(pageId).classList.add('active');
+      // basic scroll to top when route changes
+      window.scrollTo({top:0, behavior:'instant'});
+    }
+    window.addEventListener('hashchange', render);
+    render();
+
+    // Thank-you modal if redirected back with #thanks
+    function checkThanks(){
+      if(location.hash === '#thanks'){
+        document.getElementById('thanks').style.display = 'flex';
+      }
+    }
+    function closeThanks(e){ e && e.preventDefault(); document.getElementById('thanks').style.display='none'; location.hash = '/appointments'; }
+    window.addEventListener('hashchange', checkThanks);
+    checkThanks();
+
+    // Disable button on submit for UX
+    const form = document.getElementById('apptForm');
+    form?.addEventListener('submit', function(){
+      const btn = this.querySelector('button[type="submit"]');
+      if(btn){ btn.textContent = 'Sending…'; btn.disabled = true; }
+    });
   </script>
 </body>
 </html>
-
