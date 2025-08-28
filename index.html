@@ -31,7 +31,7 @@
 <body>
   <!-- Fullscreen cover with only logo -->
   <div id="cover" role="dialog" aria-label="Enter site">
-    <button class="logo-button" id="coverLogo">
+    <button class="logo-button" id="coverLogo" type="button" onclick="enterSite('about')" aria-label="Enter site">
       <span class="wordmark">FLOYDVANAVIE</span>
     </button>
   </div>
@@ -69,49 +69,52 @@
   </footer>
 
   <script>
+  // Year stamp
+  const yEl = document.getElementById('year');
+  if (yEl) yEl.textContent = new Date().getFullYear();
+
+  // Pages we can show
+  const PAGES = ['about','appointments','archive'];
+
+  function showSection(id){
+    PAGES.forEach(pid => {
+      const el = document.getElementById(pid);
+      const active = pid === id;
+      if (el){
+        el.classList.toggle('active', active);
+        el.setAttribute('aria-hidden', active ? 'false' : 'true');
+      }
+    });
     const cover = document.getElementById('cover');
-    const logoBtn = document.getElementById('coverLogo');
-    const pages = ['about','appointments','archive'];
+    if (cover) cover.style.display = 'none';
+    window.scrollTo(0,0);
+  }
 
-    function showSection(id){
-      pages.forEach(pid=>{
-        const el = document.getElementById(pid);
-        const active = pid === id;
-        if(el){ el.classList.toggle('active', active); el.setAttribute('aria-hidden', active? 'false':'true'); }
-      });
-      // Always hide cover once a section is chosen
-      if(cover) cover.style.display = 'none';
-      // Ensure top of page, no leftover scroll
-      window.scrollTo(0,0);
+  // Expose a simple entry for the logo button (also used by tabs if needed)
+  function enterSite(target){
+    const t = PAGES.includes(target) ? target : 'about';
+    location.hash = '#' + t;
+    showSection(t);
+  }
+  window.enterSite = enterSite; // ensure inline onclick works
+
+  // Wire up after DOM is ready
+  document.addEventListener('DOMContentLoaded', function(){
+    // If deep link like #appointments, skip the cover and show that page
+    const raw = (location.hash || '').replace('#','').replace('/','');
+    if (PAGES.includes(raw)) {
+      showSection(raw);
     }
 
-    // Clicking the centered logo enters straight to About
-    logoBtn?.addEventListener('click', ()=>{
-      location.hash = '#about';
-      showSection('about');
-    });
-
-    // Nav clicks: prevent scroll-to-anchors; swap sections instead
-    document.querySelectorAll('nav a[data-target]').forEach(a=>{
-      a.addEventListener('click', (e)=>{
+    // Tab navigation (no scrolling)
+    document.querySelectorAll('nav a[data-target]').forEach(a => {
+      a.addEventListener('click', function(e){
         e.preventDefault();
-        const id = a.getAttribute('data-target');
-        location.hash = '#' + id;
-        showSection(id);
+        const id = this.getAttribute('data-target');
+        enterSite(id);
       });
     });
-
-    // If someone opens a deep link (e.g., #/appointments or #appointments), auto-enter and show that page only
-    function initialRoute(){
-      const raw = (location.hash || '').replace('#','').replace('/','');
-      const target = pages.includes(raw) ? raw : 'about';
-      if(target){ showSection(target); }
-    }
-
-    window.addEventListener('hashchange', initialRoute);
-    initialRoute();
-
-    document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
+  });
+</script>
 </body>
 </html>
