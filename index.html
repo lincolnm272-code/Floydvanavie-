@@ -70,7 +70,7 @@
 <body>
   <header>
     <div class="wrap nav">
-      <div class="brand">FLOYDVANAVIE<span>VINTAGE SHOWROOM</span></div>
+      <a class="brand" href="#/">FLOYDVANAVIE<span>VINTAGE SHOWROOM</span></a>
       <nav class="links">
         <a class="link" href="#/appointments">Appointments</a>
         <a class="link" href="#/about">About</a>
@@ -81,8 +81,34 @@
   </header>
 
   <main class="wrap">
+    <!-- Home / Cover Page -->
+    <section id="page-home" class="page active">
+      <div class="hero">
+        <div>
+          <h1>FLOYDVANAVIE</h1>
+          <p class="lead">Vintage, workwear, and Americana curated in East Texas. Private showroom by appointment. This is a tribute to honest garments with mileage — repaired where needed, ready to wear.</p>
+        </div>
+        <aside class="card">
+          <div class="in stack">
+            <h3>Start here</h3>
+            <a class="btn" href="#/appointments">Book an appointment</a>
+            <a class="link" href="#/about">About the curator</a>
+            <a class="link" href="#/archive">Archive & milestones</a>
+          </div>
+        </aside>
+      </div>
+      <div class="grid">
+        <div class="col-7">
+          <div class="card"><div class="in stack">
+            <h3>What FLOYDVANAVIE is</h3>
+            <p>One‑on‑one pulls tailored to you. Focused on 1930s–1990s workwear, denim, sportswear, and silver/turquoise. I buy, sell, trade, and help with sizing and repairs.</p>
+          </div></div>
+        </div>
+      </div>
+    </section>
+
     <!-- Appointments Page -->
-    <section id="page-appointments" class="page active">
+    <section id="page-appointments" class="page">
       <div class="hero">
         <div>
           <h1>Book a private showroom visit</h1>
@@ -270,13 +296,14 @@
 
     // Hash router: #/appointments (default), #/about, #/archive
     const routes = {
+      '/':'page-home',
       '/appointments':'page-appointments',
       '/about':'page-about',
       '/archive':'page-archive'
     };
 
     function render(){
-      const hash = location.hash.replace('#','') || '/appointments';
+      const hash = location.hash.replace('#','') || '/';
       Object.values(routes).forEach(id => document.getElementById(id).classList.remove('active'));
       const pageId = routes[hash] || routes['/appointments'];
       document.getElementById(pageId).classList.add('active');
@@ -305,3 +332,4 @@
   </script>
 </body>
 </html>
+
