@@ -32,7 +32,7 @@
     .page.active{display:block}
 
     /* COVER: logo only */
-    .cover{min-height:100vh; display:grid; place-items:center}
+    .cover{position:fixed; inset:0; display:grid; place-items:center; background:var(--paper); z-index:100}
     .logo-button{display:inline-block; text-align:center; padding:28px 40px; border:3px solid var(--ink); background:transparent; cursor:pointer; user-select:none}
     .logo-button .wordmark{font-family: Georgia, "Times New Roman", Times, serif; font-weight:900; letter-spacing:.06em; text-transform:uppercase; font-size:72px; line-height:1}
     .logo-button:hover{transform:translateY(-2px)}
@@ -238,6 +238,9 @@
       const hash = location.hash.replace('#','') || '/';
       // toggle home class to hide header/footer on cover
       document.body.classList.toggle('on-home', hash === '/');
+      // hide/show the full-screen cover by toggling its active state
+      const cover = document.getElementById('page-home');
+      if(cover){ cover.classList.toggle('active', hash === '/'); }
       // activate tabs styling
       document.querySelectorAll('.links a').forEach(a=>{
         a.classList.toggle('active', a.getAttribute('data-tab') === hash);
@@ -260,3 +263,4 @@
   </script>
 </body>
 </html>
+
