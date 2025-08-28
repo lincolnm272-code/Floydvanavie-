@@ -23,11 +23,11 @@
     .btn{display:inline-block;padding:10px 20px;border-radius:8px;font-weight:600;background:#111;color:#fff}
     .btn:hover{opacity:.9}
 
-    .hero{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;padding:80px 0}
+    .hero{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;padding:80px 0;min-height:calc(100vh - 140px)}
     .hero h1{font-size:48px;line-height:1.1;margin:0;font-weight:900;letter-spacing:-.01em}
     .hero p{margin:12px 0 0;color:var(--muted);max-width:60ch}
 
-    .card{background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:0 4px 10px rgba(0,0,0,0.05)}
+    .card{background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
     .card .in{padding:24px}
     .stack{display:grid;gap:16px}
 
@@ -47,8 +47,8 @@
     .row{display:grid;grid-template-columns:1fr 1fr;gap:20px}
     .small{font-size:14px;color:var(--muted)}
 
-    .checkbox-line{display:flex;align-items:flex-start;gap:10px;margin-top:10px}
-    .checkbox-line input{margin-top:3px}
+    .checkbox-line{display:flex;align-items:center;gap:12px;margin-top:8px}
+    .checkbox-line input{margin-top:0;width:18px;height:18px}
 
     footer{padding:32px 0;text-align:center}
     .fine{font-size:14px;color:var(--muted)}
