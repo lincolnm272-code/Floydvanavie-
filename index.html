@@ -4,287 +4,114 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>FLOYDVANAVIE — Showroom</title>
-  <meta name="description" content="Farmhouse/Americana-inspired showroom site for FLOYDVANAVIE. Cover → About → Appointments / Archive." />
   <meta name="theme-color" content="#231f1a" />
   <style>
-    :root{ --paper:#f6f1e7; --ink:#231f1a; --navy:#2d3a4b; --rust:#7a2f2a; --line:#d8cfc2; --linen:#faf6ee; }
+    :root{ --paper:#f6f1e7; --ink:#231f1a; --line:#d8cfc2; }
     *{box-sizing:border-box}
     html,body{margin:0;height:100%;background:var(--paper);color:var(--ink)}
     body{font:16px/1.65 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial}
-    h1,h2,h3{font-family: Georgia, "Times New Roman", Times, serif; letter-spacing:.01em}
-    a{color:var(--navy);text-decoration:none}
-    a:hover{text-decoration:underline}
+    h1,h2{font-family: Georgia, "Times New Roman", Times, serif;}
 
-    /* When the cover (logo) is visible, hide the rest of the site */
-    body.cover-active header,
-    body.cover-active main,
-    body.cover-active footer { display:none; }
-
-    header{position:sticky;top:0;background:var(--paper);border-bottom:2px solid var(--line);z-index:40}
-    .wrap{max-width:1100px;margin:0 auto;padding:28px}
-    .nav{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:72px}
-    .brand{font-family: Georgia, "Times New Roman", Times, serif; font-weight:900; letter-spacing:.08em; text-transform:uppercase; font-size:18px}
-    .brand span{display:block;font:11px/1.2 ui-sans-serif;letter-spacing:.18em;color:#5f5a54;margin-top:3px}
-    .links{display:flex;gap:12px;align-items:center}
-    .tabs a{display:inline-block; padding:8px 12px; border:2px solid var(--ink); border-radius:6px; background:var(--linen); font-weight:800; text-transform:uppercase; letter-spacing:.06em}
-    .tabs a.active{background:var(--ink); color:#fff}
-
-    main{min-height:calc(100vh - 160px)}
-    .page{display:none}
-    .page.active{display:block}
-
-    /* COVER: true full-screen overlay with centered logo */
-    #cover{position:fixed; inset:0; display:grid; place-items:center; background:var(--paper); z-index:1000}
-    .logo-button{display:inline-block; text-align:center; padding:28px 40px; border:3px solid var(--ink); background:transparent; cursor:pointer; user-select:none}
-    .logo-button .wordmark{font-family: Georgia, "Times New Roman", Times, serif; font-weight:900; letter-spacing:.06em; text-transform:uppercase; font-size:72px; line-height:1}
+    /* ---- COVER (logo only) ---- */
+    #cover{position:fixed; inset:0; display:grid; place-items:center; background:var(--paper); z-index:9999}
+    .logo-button{border:3px solid var(--ink); background:transparent; cursor:pointer; padding:28px 40px}
+    .logo-button .wordmark{font-family: Georgia, "Times New Roman", Times, serif; font-weight:900; text-transform:uppercase; font-size:72px; line-height:1}
     .logo-button:hover{transform:translateY(-2px)}
 
-    /* ABOUT */
-    .hero{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:end;padding:36px 0}
-    .lead{font-size:19px;color:#3f3a36;max-width:70ch}
-    .rule{border-top:2px dashed var(--line); margin:22px 0}
-    .card{background:var(--linen);border:2px solid var(--line);border-radius:10px}
-    .card .in{padding:20px}
-    .stack{display:grid;gap:14px}
-    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:24px}
-    .col-7{grid-column:span 7}
-    .col-5{grid-column:span 5}
+    /* ---- Site chrome ---- */
+    header{border-bottom:2px solid var(--line)}
+    .wrap{max-width:1100px;margin:0 auto;padding:20px}
+    nav a{margin-right:12px; font-weight:800; text-transform:uppercase}
 
-    /* FORM */
-    form label{display:block;font-family:Georgia, "Times New Roman", Times, serif; font-weight:800; letter-spacing:.02em; text-transform:uppercase; font-size:12px; margin:10px 0 6px}
-    input, textarea, select{width:100%;padding:12px 13px;border:2px dashed var(--line);border-radius:6px;background:#fff;font:inherit}
-    textarea{min-height:120px;resize:vertical}
-    input:focus, textarea:focus, select:focus{outline:2px solid var(--navy); outline-offset:1px}
-    .row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-    .agree{display:flex;gap:10px;align-items:center;padding:6px 0}
-    .agree input{width:18px;height:18px}
-    .small{font-size:13px;color:#5f5a54}
-
-    @media (max-width:900px){
-      .hero{grid-template-columns:1fr}
-      .grid{grid-template-columns:1fr}
-      .col-7,.col-5{grid-column:span 1}
-      .row{grid-template-columns:1fr}
-    }
+    /* ---- Pages: show ONE at a time ---- */
+    .page{display:none}
+    .page.active{display:block}
   </style>
 </head>
-<body class="cover-active">
-  <!-- Full-screen cover with just the logo -->
-  <div id="cover">
-    <button id="cover-logo" class="logo-button">
+<body>
+  <!-- Fullscreen cover with only logo -->
+  <div id="cover" role="dialog" aria-label="Enter site">
+    <button class="logo-button" id="coverLogo">
       <span class="wordmark">FLOYDVANAVIE</span>
     </button>
   </div>
 
   <header>
-    <div class="wrap nav">
-      <div class="brand">FLOYDVANAVIE<span>VINTAGE SHOWROOM</span></div>
-      <nav class="links tabs">
-        <a href="#/about" data-tab="/about">About</a>
-        <a href="#/appointments" data-tab="/appointments">Appointments</a>
-        <a href="#/archive" data-tab="/archive">Archive</a>
+    <div class="wrap">
+      <h1 style="margin:0">FLOYDVANAVIE</h1>
+      <nav>
+        <a href="#about" data-target="about">About</a>
+        <a href="#appointments" data-target="appointments">Appointments</a>
+        <a href="#archive" data-target="archive">Archive</a>
       </nav>
     </div>
   </header>
 
-  <main>
-    <!-- ABOUT -->
-    <section id="page-about" class="page">
-      <div class="wrap" style="min-height:calc(100vh - 160px); display:grid; grid-template-columns:1fr 1fr; gap:32px; align-items:center">
-        <div class="card" style="min-height:360px; display:grid; place-items:center;">
-          <!-- Replace with your real photo -->
-          <div style="text-align:center">
-            <div style="width:260px;height:340px;border:2px dashed var(--line);border-radius:8px;background:#fff;display:inline-grid;place-items:center" class="small">Your photo here</div>
-            <div class="small" style="margin-top:8px">(Add an <img> once you send it)</div>
-          </div>
-        </div>
-        <div>
-          <h1 style="margin:0 0 10px">Lincoln — FLOYDVANAVIE</h1>
-          <p class="lead">I started FLOYDVANAVIE to keep honest garments in circulation — pieces with miles, repair, and story. I buy, sell, trade, and repair vintage workwear, denim, and sportswear from the 1930s–1990s.</p>
-          <div class="rule"></div>
-          <p>The name mixes Pink Floyd + Nirvana + “vie” for life. I grew up around hard-wearing clothing and Americana — the stuff built to work, then keep working. Appointments are one-on-one so I can pull in your size and interests.</p>
-          <div class="rule"></div>
-          <div class="tabs" style="display:flex;gap:12px;flex-wrap:wrap">
-            <a href="#/appointments" class="active" style="display:inline-block; padding:12px 16px; border:2px solid var(--ink); border-radius:6px; background:var(--ink); color:#fff; font-weight:800; text-transform:uppercase; letter-spacing:.06em">Make an Appointment</a>
-            <a href="#/archive" style="display:inline-block; padding:12px 16px; border:2px solid var(--ink); border-radius:6px; background:var(--linen); font-weight:800; text-transform:uppercase; letter-spacing:.06em">Archive & Roots</a>
-          </div>
-        </div>
-      </div>
+  <main class="wrap">
+    <section id="about" class="page" aria-hidden="true">
+      <h2>About</h2>
+      <p>Who I am, why I started, and what FLOYDVANAVIE represents.</p>
     </section>
 
-    <!-- APPOINTMENTS -->
-    <section id="page-appointments" class="page">
-      <div class="wrap">
-        <div class="hero">
-          <div>
-            <h1>Book a Private Visit</h1>
-            <p class="lead">Tell me what you’re into and when you’d like to come by. I’ll reply from <strong>floydvanavie@gmail.com</strong> to confirm and share the address.</p>
-          </div>
-        </div>
-
-        <div class="grid">
-          <div class="col-7">
-            <form id="apptForm" action="https://formsubmit.co/floydvanavie@gmail.com" method="POST" class="card">
-              <div class="in stack">
-                <input type="hidden" name="_captcha" value="false" />
-                <input type="hidden" name="_template" value="table" />
-                <input type="hidden" name="_subject" value="New Showroom Appointment Request — FLOYDVANAVIE" />
-                <input type="hidden" name="_next" value="https://lincolnm272-code.github.io/Floydvanavie-/#thanks" />
-
-                <div class="row">
-                  <div>
-                    <label for="name">Your Name*</label>
-                    <input id="name" name="Name" required />
-                  </div>
-                  <div>
-                    <label for="email">Email*</label>
-                    <input id="email" name="Email" type="email" required />
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div>
-                    <label for="phone">Phone</label>
-                    <input id="phone" name="Phone" placeholder="optional" />
-                  </div>
-                  <div>
-                    <label for="when">Preferred Date</label>
-                    <input id="when" name="Preferred Date" type="date" />
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div>
-                    <label for="time">Preferred Time</label>
-                    <select id="time" name="Preferred Time">
-                      <option value="">Any</option>
-                      <option>Morning</option>
-                      <option>Afternoon</option>
-                      <option>Evening</option>
-                    </select>
-                  </div>
-                  <div>
-                    <label for="focus">Focus</label>
-                    <input id="focus" name="Focus" placeholder="e.g., 30s workwear, 70s sportswear, denim 32x30" />
-                  </div>
-                </div>
-
-                <label class="agree small">
-                  <input type="checkbox" required />
-                  <span>I understand this is a request and not a confirmed booking.</span>
-                </label>
-
-                <label for="notes">Notes</label>
-                <textarea id="notes" name="Notes" placeholder="Sizing, specific items, trade offers, etc."></textarea>
-
-                <button class="tabs a active" type="submit" style="border-color:var(--ink);background:var(--ink);color:#fff">Send Request</button>
-                <div class="small">You’ll receive a reply from <strong>floydvanavie@gmail.com</strong>.</div>
-              </div>
-            </form>
-          </div>
-          <aside class="col-5">
-            <div class="card"><div class="in stack">
-              <h3>Visit Basics</h3>
-              <ul class="small" style="margin:0 0 0 18px">
-                <li>30–60 minute session</li>
-                <li>Location shared after confirmation</li>
-                <li>Payment: Cash, Zelle, Cash App</li>
-              </ul>
-            </div></div>
-          </aside>
-        </div>
-      </div>
+    <section id="appointments" class="page" aria-hidden="true">
+      <h2>Appointments</h2>
+      <p>Form and details go here…</p>
     </section>
 
-    <!-- ARCHIVE -->
-    <section id="page-archive" class="page">
-      <div class="wrap">
-        <div class="hero">
-          <div>
-            <h1>Archive & Roots</h1>
-            <p class="lead">Milestones, finds, and the history that shaped this project.</p>
-          </div>
-        </div>
-        <div class="card"><div class="in stack">
-          <p class="small">Add entries here later — e.g., 1930s Duxback jacket, Montgomery Ward shirt, 1970s tag studies, showroom build-out, family roots.</p>
-        </div></div>
-      </div>
+    <section id="archive" class="page" aria-hidden="true">
+      <h2>Archive & Roots</h2>
+      <p>History, milestones, and roots of the brand.</p>
     </section>
   </main>
 
   <footer>
-    <div class="wrap" style="display:flex;justify-content:space-between;align-items:center;gap:16px;padding:22px 28px;border-top:2px solid var(--line)">
-      <div class="small">© <span id="year"></span> FLOYDVANAVIE</div>
-      <div class="small">East Texas • By appointment</div>
-    </div>
+    <div class="wrap">© <span id="year"></span> FLOYDVANAVIE</div>
   </footer>
 
-  <!-- Thank-you modal for form redirect -->
-  <div id="thanks" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,.55); align-items:center; justify-content:center; padding:20px">
-    <div class="card" style="max-width:560px;width:100%;background:#fff">
-      <div class="in stack">
-        <h3>Request received — check your email</h3>
-        <p>I’ll reply from <strong>floydvanavie@gmail.com</strong> to confirm your appointment window and share the address.</p>
-        <a href="#/about" class="tabs a" style="display:inline-block;padding:8px 12px;border:2px solid var(--ink);border-radius:6px;background:var(--linen);font-weight:800;text-transform:uppercase;letter-spacing:.06em">Back to About</a>
-      </div>
-    </div>
-  </div>
-
   <script>
-    // Year stamp
+    const cover = document.getElementById('cover');
+    const logoBtn = document.getElementById('coverLogo');
+    const pages = ['about','appointments','archive'];
+
+    function showSection(id){
+      pages.forEach(pid=>{
+        const el = document.getElementById(pid);
+        const active = pid === id;
+        if(el){ el.classList.toggle('active', active); el.setAttribute('aria-hidden', active? 'false':'true'); }
+      });
+      // Always hide cover once a section is chosen
+      if(cover) cover.style.display = 'none';
+      // Ensure top of page, no leftover scroll
+      window.scrollTo(0,0);
+    }
+
+    // Clicking the centered logo enters straight to About
+    logoBtn?.addEventListener('click', ()=>{
+      location.hash = '#about';
+      showSection('about');
+    });
+
+    // Nav clicks: prevent scroll-to-anchors; swap sections instead
+    document.querySelectorAll('nav a[data-target]').forEach(a=>{
+      a.addEventListener('click', (e)=>{
+        e.preventDefault();
+        const id = a.getAttribute('data-target');
+        location.hash = '#' + id;
+        showSection(id);
+      });
+    });
+
+    // If someone opens a deep link (e.g., #/appointments or #appointments), auto-enter and show that page only
+    function initialRoute(){
+      const raw = (location.hash || '').replace('#','').replace('/','');
+      const target = pages.includes(raw) ? raw : 'about';
+      if(target){ showSection(target); }
+    }
+
+    window.addEventListener('hashchange', initialRoute);
+    initialRoute();
+
     document.getElementById('year').textContent = new Date().getFullYear();
-
-    // Simple router: default to /about (so once cover hides, you see About)
-    const routes = { '/about':'page-about','/appointments':'page-appointments','/archive':'page-archive' };
-
-    function render(){
-      const hash = location.hash.replace('#','') || '/about';
-
-      // Activate tabs
-      document.querySelectorAll('.links a').forEach(a=>{
-        a.classList.toggle('active', a.getAttribute('data-tab') === hash);
-      });
-
-      // Show the requested page
-      Object.values(routes).forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.classList.remove('active');
-      });
-      const pageId = routes[hash] || routes['/about'];
-      const pageEl = document.getElementById(pageId);
-      if (pageEl) pageEl.classList.add('active');
-
-      // Never re-show the cover after you navigate anywhere
-      if (hash !== '/'){ document.body.classList.remove('cover-active'); }
-
-      // Always start at top
-      window.scrollTo({top:0,behavior:'instant'});
-    }
-
-    // Cover -> About
-    document.getElementById('cover-logo').addEventListener('click', ()=>{
-      document.body.classList.remove('cover-active');
-      location.hash = '/about';
-    });
-
-    window.addEventListener('hashchange', render);
-    // If someone opens a deep link (e.g., #/appointments), skip cover immediately
-    if (location.hash && location.hash !== '#/') {
-      document.body.classList.remove('cover-active');
-    }
-    render();
-
-    // Thank-you modal
-    function checkThanks(){ if(location.hash === '#thanks'){ document.getElementById('thanks').style.display = 'flex'; } }
-    window.addEventListener('hashchange', checkThanks); checkThanks();
-
-    // Disable submit button on send
-    const form = document.getElementById('apptForm');
-    form?.addEventListener('submit', function(){
-      const btn = this.querySelector('button[type="submit"]');
-      if(btn){ btn.textContent = 'Sending…'; btn.disabled = true; }
-    });
   </script>
 </body>
 </html>
-
