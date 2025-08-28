@@ -25,7 +25,7 @@
     .tabs a.active{background:var(--ink); color:#fff}
     
     /* Hide header links on home (cover) */
-    body.on-home header .links{visibility:hidden}
+    body.on-home header{display:none}
 
     main{min-height:calc(100vh - 160px)}
     .page{display:none}
@@ -34,7 +34,7 @@
     /* COVER: center logo only */
     .cover{min-height:calc(100vh - 120px); display:grid; place-items:center}
     .logo-button{display:inline-block; text-align:center; padding:28px 40px; border:3px solid var(--ink); background:var(--linen); border-radius:10px; cursor:pointer; user-select:none}
-    .logo-button .wordmark{font-family: Georgia, "Times New Roman", Times, serif; font-weight:900; letter-spacing:.06em; text-transform:uppercase; font-size:54px; line-height:1}
+    .logo-button .wordmark{font-family: Georgia, "Times New Roman", Times, serif; font-weight:900; letter-spacing:.06em; text-transform:uppercase; font-size:72px; line-height:1}
     .logo-button .sub{display:block; margin-top:8px; font:12px ui-sans-serif; letter-spacing:.22em; color:#5f5a54}
     .logo-button:hover{transform:translateY(-2px)}
 
@@ -90,21 +90,27 @@
 
     <!-- ABOUT: shows who you are + why you started; tabs appear in header -->
     <section id="page-about" class="page">
-      <div class="wrap">
-        <div class="hero">
-          <div class="card"><div class="in" style="min-height:260px; display:grid; place-items:center; text-align:center">
-            <!-- Placeholder for your portrait; replace with an <img src="..." alt="Lincoln Miller" style="max-width:100%;border-radius:8px;border:2px solid var(--line)"> -->
-            <div class="small">[ Add a photo of you here ]</div>
-          </div></div>
-          <div>
-            <h1>Who I Am & Why I Started</h1>
-            <p class="lead">I’m Lincoln, and FLOYDVANAVIE is my way of keeping honest garments in circulation — pieces with miles, repair, and story. I buy, sell, trade, and repair vintage workwear, denim, and sportswear from the 1930s–1990s.</p>
-            <div class="rule"></div>
-            <p>The name combines Pink Floyd + Nirvana + “vie” for life. I grew up around hard‑wearing clothing and Americana — the stuff built to work, then keep working. This showroom is appointment‑only so I can pull items that fit your size and interests.</p>
-          </div>
-        </div>
+  <div class="wrap" style="min-height:calc(100vh - 160px); display:grid; grid-template-columns:1fr 1fr; gap:32px; align-items:center">
+    <div class="card" style="min-height:360px; display:grid; place-items:center;">
+      <!-- Replace with your real photo -->
+      <div style="text-align:center">
+        <div style="width:260px;height:340px;border:2px dashed var(--line);border-radius:8px;background:#fff;display:inline-grid;place-items:center" class="small">Your photo here</div>
+        <div class="small" style="margin-top:8px">(Add an <img> once you send it)</div>
       </div>
-    </section>
+    </div>
+    <div>
+      <h1 style="margin:0 0 10px">Lincoln — FLOYDVANAVIE</h1>
+      <p class="lead">I started FLOYDVANAVIE to keep honest garments in circulation — pieces with miles, repair, and story. I buy, sell, trade, and repair vintage workwear, denim, and sportswear from the 1930s–1990s.</p>
+      <div class="rule"></div>
+      <p>The name mixes Pink Floyd + Nirvana + “vie” for life. I grew up around hard‑wearing clothing and Americana — the stuff built to work, then keep working. Appointments are one‑on‑one so I can pull in your size and interests.</p>
+      <div class="rule"></div>
+      <div class="tabs" style="display:flex;gap:12px;flex-wrap:wrap">
+        <a href="#/appointments" class="active" style="display:inline-block; padding:12px 16px; border:2px solid var(--ink); border-radius:6px; background:var(--ink); color:#fff; font-weight:800; text-transform:uppercase; letter-spacing:.06em">Make an Appointment</a>
+        <a href="#/archive" style="display:inline-block; padding:12px 16px; border:2px solid var(--ink); border-radius:6px; background:var(--linen); font-weight:800; text-transform:uppercase; letter-spacing:.06em">Archive & Roots</a>
+      </div>
+    </div>
+  </div>
+</section>
 
     <!-- APPOINTMENTS PAGE -->
     <section id="page-appointments" class="page">
